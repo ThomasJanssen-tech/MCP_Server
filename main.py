@@ -33,11 +33,23 @@ def get_company_info(name: str) -> str:
 
     if company:
         json = {
-            "name": company[0],
-            "description": company[1],
-            "location": company[2],
-            "founded": company[3],
-            "employees": company[4]
+            "name": company[1],
+            "url": company[2],
+            "cb_rank": company[3],
+            "region": company[4],
+            "about": company[5],
+            "founded_date": company[6],
+            "num_employees": company[7],
+            "company_type": company[8],
+            "country": company[9],
+            "website": company[10],
+            "contact_email": company[11],
+            "semrush_visits_latest_month": company[12],
+            "num_investors": company[13],
+            "growth_score": company[14],
+            "growth_trend": company[15],
+            "heat_score": company[16],
+            "heat_trend": company[17]
         }
 
     return json if company else f"No information found for {name}."
@@ -49,4 +61,5 @@ if __name__ == "__main__":
 
 
 #mcp.run(transport="sse", host="127.0.0.1", port=8000)
+
 

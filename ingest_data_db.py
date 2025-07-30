@@ -14,13 +14,6 @@ import sqlite3
 load_dotenv()
 
 
-###############################   CREATE DIR IF IT DOESN'T EXIST   ##################################################################################
-
-dir_exists = os.path.exists(os.getenv("DATABASE_LOCATION")) 
-
-if not dir_exists:
-    os.makedirs(os.getenv("DATABASE_LOCATION"))
-
 
 # Connect to the SQLite database (or create it if it doesn't exist)
 conn = sqlite3.connect('companies.db')
@@ -45,7 +38,16 @@ CREATE TABLE IF NOT EXISTS `companies` (
     `about` TEXT,
     `founded_date` TEXT,
     `num_employees` TEXT,
-    `reached_out` BOOLEAN DEFAULT FALSE
+    `company_type` TEXT,
+    `country` TEXT,
+    `website` TEXT,
+    `contact_email` TEXT,
+    `semrush_visits_latest_month` TEXT,
+    `num_investors` TEXT,
+    `growth_score` TEXT,
+    `growth_trend` TEXT,
+    `heat_score` TEXT,
+    `heat_trend` TEXT
 );
 """
 
@@ -85,10 +87,12 @@ file_content = process_json_lines(os.getenv("DATASET_STORAGE_FOLDER")+"data.txt"
 for line in file_content:
 
 
-    data = [line['name'], line['url'], line['cb_rank'], line['region'], line['about'], line['founded_date'], line['num_employees']]
+    data = [line['name'], line['url'], line['cb_rank'], line['region'], line['about'], line['founded_date'], line['num_employees'], line['company_type'], line['country_code'], line['website'], line['contact_email'], line['semrush_visits_latest_month'], line['num_investors'], line['growth_score'], line['growth_trend'], line['heat_score'], line['heat_trend']]
 
-    cursor.execute("INSERT INTO `companies` (`name`,`url`,`cb_rank`,`region`,`about`,`founded_date`,`num_employees`) VALUES (?, ?, ?, ?, ?, ?, ?)", data)
+    cursor.execute("INSERT INTO `companies` (`name`,`url`,`cb_rank`,`region`,`about`,`founded_date`,`num_employees`,`company_type`,`country`,`website`,`contact_email`,`semrush_visits_latest_month`,`num_investors`,`growth_score`,`growth_trend`,`heat_score`,`heat_trend`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
     conn.commit()
+
+
 
 
 
