@@ -6,8 +6,6 @@ from mcp.server.fastmcp import FastMCP
 load_dotenv()
 
 
-
-
 # Create an MCP server
 mcp = FastMCP("CompanyInfoServer")
 
