@@ -12,7 +12,7 @@ mcp = FastMCP("CompanyInfoServer")
 
 # Add a dynamic greeting resource
 @mcp.tool()
-def get_company_info(name: str) -> str:
+def get_company_info(name: str) -> dict:
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
     db_path = os.path.join(base_dir, "companies.db")
@@ -29,35 +29,37 @@ def get_company_info(name: str) -> str:
     conn.commit()
     conn.close()
 
+
     if company:
         json = {
-            "name": company[1],
-            "url": company[2],
-            "cb_rank": company[3],
-            "region": company[4],
-            "about": company[5],
-            "founded_date": company[6],
-            "num_employees": company[7],
-            "company_type": company[8],
-            "country": company[9],
-            "website": company[10],
-            "contact_email": company[11],
-            "semrush_visits_latest_month": company[12],
-            "num_investors": company[13],
-            "growth_score": company[14],
-            "growth_trend": company[15],
-            "heat_score": company[16],
-            "heat_trend": company[17]
-        }
-
-    return json if company else f"No information found for {name}."
-
-
-
-if __name__ == "__main__":
-    mcp.run()
+                "name": str(company[1]),
+                "url": str(company[2]),
+                "cb_rank": str(company[3]),
+                "region": str(company[4]),
+                "about": str(company[5]),
+                "founded_date": str(company[6]),
+                "num_employees": str(company[7]),
+                "company_type": str(company[8]),
+                "country": str(company[9]),
+                "website": str(company[10]),
+                "contact_email": str(company[11]),
+                "semrush_visits_latest_month": str(company[12]),
+                "num_investors": str(company[13]),
+                "growth_score": str(company[14]),
+                "growth_trend": str(company[15]),
+                "heat_score": str(company[16]),
+                "heat_trend": str(company[17])
+            }
+    else:
+        json = {"error": f"No information found for {name}."}
 
 
-#mcp.run(transport="sse", host="127.0.0.1", port=8000)
+    return json
+    
+
+#if __name__ == "__main__":
+#    mcp.run()
+
+#    mcp.run(transport="sse", host="127.0.0.1", port=8000)
 
 

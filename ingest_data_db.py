@@ -87,7 +87,18 @@ file_content = process_json_lines(os.getenv("DATASET_STORAGE_FOLDER")+"data.txt"
 for line in file_content:
 
 
-    data = [line['name'], line['url'], line['cb_rank'], line['region'], line['about'], line['founded_date'], line['num_employees'], line['company_type'], line['country_code'], line['website'], line['contact_email'], line['semrush_visits_latest_month'], line['num_investors'], line['growth_score'], line['growth_trend'], line['heat_score'], line['heat_trend']]
+    if 'growth_trend' not in line:
+        growth_trend = "N/A"
+    else:
+        growth_trend = line['growth_trend']
+
+
+    if 'heat_trend' not in line:
+        heat_trend = "N/A"
+    else:
+        heat_trend = line['heat_trend']
+
+    data = [line['name'], line['url'], line['cb_rank'], line['region'], line['about'], line['founded_date'], line['num_employees'], line['company_type'], line['country_code'], line['website'], line['contact_email'], line['semrush_visits_latest_month'], line['num_investors'], line['growth_score'], growth_trend, line['heat_score'], heat_trend]
 
     cursor.execute("INSERT INTO `companies` (`name`,`url`,`cb_rank`,`region`,`about`,`founded_date`,`num_employees`,`company_type`,`country`,`website`,`contact_email`,`semrush_visits_latest_month`,`num_investors`,`growth_score`,`growth_trend`,`heat_score`,`heat_trend`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
     conn.commit()
