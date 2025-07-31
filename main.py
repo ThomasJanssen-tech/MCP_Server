@@ -10,7 +10,7 @@ load_dotenv()
 mcp = FastMCP("CompanyInfoServer")
 
 
-# Add a dynamic greeting resource
+
 @mcp.tool()
 def get_company_info(name: str) -> dict:
 
@@ -18,7 +18,7 @@ def get_company_info(name: str) -> dict:
     db_path = os.path.join(base_dir, "companies.db")
     conn = sqlite3.connect(db_path)
 
-    # Connect to the SQLite database (or create it if it doesn't exist)
+    # Connect to the SQLite database
 
     cursor = conn.cursor()
 
